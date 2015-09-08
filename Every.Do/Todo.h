@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, Priority) {
 @property (nonatomic, getter=isCompleted) BOOL completed;
 
 // Designated initializer
-- (instancetype)initWithTitle:(NSString *)title details:(NSString *)details prioroty:(Priority)prioritNumber;
+- (instancetype)initWithTitle:(NSString *)title details:(NSString *)details priority:(Priority)prioritNumber;
 
 - (instancetype)initWithTitle:(NSString *)title details:(NSString *)details;
 

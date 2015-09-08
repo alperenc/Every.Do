@@ -16,6 +16,7 @@
 		C7F332BC1B9F5E6A00D80F7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7F332BA1B9F5E6A00D80F7C /* LaunchScreen.storyboard */; };
 		C7F332C51B9F5E9F00D80F7C /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F332C41B9F5E9F00D80F7C /* Todo.m */; settings = {ASSET_TAGS = (); }; };
 		C7F332EE1B9F825100D80F7C /* TodoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F332ED1B9F825100D80F7C /* TodoTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		C7F332F11B9F98AB00D80F7C /* AddTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7F332F01B9F98AB00D80F7C /* AddTodoViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,8 @@
 		C7F332C41B9F5E9F00D80F7C /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
 		C7F332EC1B9F825100D80F7C /* TodoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoTableViewCell.h; sourceTree = "<group>"; };
 		C7F332ED1B9F825100D80F7C /* TodoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoTableViewCell.m; sourceTree = "<group>"; };
+		C7F332EF1B9F98AB00D80F7C /* AddTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTodoViewController.h; sourceTree = "<group>"; };
+		C7F332F01B9F98AB00D80F7C /* AddTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTodoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,8 @@
 				C7F332B01B9F5E6900D80F7C /* MasterViewController.m */,
 				C7F332B21B9F5E6900D80F7C /* DetailViewController.h */,
 				C7F332B31B9F5E6900D80F7C /* DetailViewController.m */,
+				C7F332EF1B9F98AB00D80F7C /* AddTodoViewController.h */,
+				C7F332F01B9F98AB00D80F7C /* AddTodoViewController.m */,
 				C7F332EC1B9F825100D80F7C /* TodoTableViewCell.h */,
 				C7F332ED1B9F825100D80F7C /* TodoTableViewCell.m */,
 				C7F332B51B9F5E6A00D80F7C /* Main.storyboard */,
@@ -166,6 +171,7 @@
 			files = (
 				C7F332C51B9F5E9F00D80F7C /* Todo.m in Sources */,
 				C7F332EE1B9F825100D80F7C /* TodoTableViewCell.m in Sources */,
+				C7F332F11B9F98AB00D80F7C /* AddTodoViewController.m in Sources */,
 				C7F332AE1B9F5E6900D80F7C /* AppDelegate.m in Sources */,
 				C7F332B11B9F5E6900D80F7C /* MasterViewController.m in Sources */,
 				C7F332AB1B9F5E6900D80F7C /* main.m in Sources */,

@@ -10,7 +10,7 @@
 
 @implementation Todo
 
-- (instancetype)initWithTitle:(NSString *)title details:(NSString *)details prioroty:(Priority)priorityNumber
+- (instancetype)initWithTitle:(NSString *)title details:(NSString *)details priority:(Priority)priorityNumber
 {
     self = [super init];
     if (self) {
@@ -24,7 +24,7 @@
 
 - (instancetype)initWithTitle:(NSString *)title details:(NSString *)details
 {
-    return [[Todo alloc] initWithTitle:title details:details prioroty:Low];
+    return [[Todo alloc] initWithTitle:title details:details priority:Low];
 }
 
 - (NSString *)priorityToString:(Priority)priority {

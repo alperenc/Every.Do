@@ -8,10 +8,11 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "AddTodoViewController.h"
 #import "Todo.h"
 #import "TodoTableViewCell.h"
 
-@interface MasterViewController ()
+@interface MasterViewController () <AddTodoDelegate>
 
 @property NSMutableArray *todos;
 @end
@@ -23,16 +24,16 @@
     // Do any additional setup after loading the view, typically from a nib.
 //    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-//    self.navigationItem.rightBarButtonItem = addButton;
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     self.todos = [@[[[Todo alloc]initWithTitle:@"Every.Do"
                                        details:@"Make a todo app for Lighthouse Labs W3D2."
-                                      prioroty:Critical],
+                                      priority:Critical],
                     [[Todo alloc]initWithTitle:@"W3D1: Readings"
                                        details:@"Do the readings for W3D1 and answer questions."
-                                      prioroty:High],
+                                      priority:High],
                     [[Todo alloc]initWithTitle:@"W3D1: Image Galleries"
                                        details:@"Implement stretch goals 3 & 4."],
                     [[Todo alloc]initWithTitle:@"W2E: Q2"
@@ -51,14 +52,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)insertNewObject:(id)sender {
-//    if (!self.todos) {
-//        self.todos = [[NSMutableArray alloc] init];
-//    }
-//    [self.todos insertObject:[NSDate date] atIndex:0];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//}
+- (void)insertNewObject:(id)sender {
+    
+    AddTodoViewController *addTodoVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"AddTodoViewController"];
+    addTodoVC.delegate = self;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:addTodoVC];
+    
+    [self presentViewController:navController animated:YES completion:nil];
+}
 
 #pragma mark - Segues
 
@@ -107,6 +108,20 @@
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
+}
+
+#pragma mark - Add Todo
+
+-(void)addTodo:(Todo *)todo {
+    
+    if (!self.todos) {
+        self.todos = [[NSMutableArray alloc] init];
+    }
+    
+    [self.todos insertObject:todo atIndex:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 }
 
 @end

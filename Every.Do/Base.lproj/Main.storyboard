@@ -167,6 +167,69 @@
             </objects>
             <point key="canvasLocation" x="709" y="-630"/>
         </scene>
+        <!--Add Todo View Controller-->
+        <scene sceneID="wcJ-bx-kWY">
+            <objects>
+                <viewController storyboardIdentifier="AddTodoViewController" id="rj0-0q-ys7" customClass="AddTodoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SJK-z3-E0g"/>
+                        <viewControllerLayoutGuide type="bottom" id="HBX-9V-Lut"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kEW-FT-wIH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add title..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ugn-7e-aYE">
+                                <rect key="frame" x="20" y="28" width="560" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rj0-0q-ys7" id="5P3-mY-cII"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add details..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LZ9-8B-GC6">
+                                <rect key="frame" x="20" y="66" width="560" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rj0-0q-ys7" id="a6c-zM-JXm"/>
+                                </connections>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Cgz-43-Hta">
+                                <rect key="frame" x="214" y="104" width="173" height="29"/>
+                                <animations/>
+                                <segments>
+                                    <segment title="Low"/>
+                                    <segment title="High"/>
+                                    <segment title="Critical"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cgz-43-Hta" firstAttribute="top" secondItem="LZ9-8B-GC6" secondAttribute="bottom" constant="8" id="0sh-TC-peK"/>
+                            <constraint firstItem="LZ9-8B-GC6" firstAttribute="top" secondItem="Ugn-7e-aYE" secondAttribute="bottom" constant="8" id="80e-RF-iSb"/>
+                            <constraint firstItem="Ugn-7e-aYE" firstAttribute="top" secondItem="SJK-z3-E0g" secondAttribute="bottom" constant="8" id="Fr8-of-Bef"/>
+                            <constraint firstItem="Ugn-7e-aYE" firstAttribute="leading" secondItem="kEW-FT-wIH" secondAttribute="leadingMargin" id="P1S-Ho-PEj"/>
+                            <constraint firstItem="LZ9-8B-GC6" firstAttribute="trailing" secondItem="kEW-FT-wIH" secondAttribute="trailingMargin" id="U9H-zJ-4RB"/>
+                            <constraint firstItem="Ugn-7e-aYE" firstAttribute="trailing" secondItem="kEW-FT-wIH" secondAttribute="trailingMargin" id="ejs-FJ-2cW"/>
+                            <constraint firstItem="Cgz-43-Hta" firstAttribute="centerX" secondItem="LZ9-8B-GC6" secondAttribute="centerX" id="kTu-dk-6b1"/>
+                            <constraint firstItem="LZ9-8B-GC6" firstAttribute="leading" secondItem="kEW-FT-wIH" secondAttribute="leadingMargin" id="ypl-0p-Ct8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="detailsTextField" destination="LZ9-8B-GC6" id="8D0-My-5eX"/>
+                        <outlet property="prioritySegmentedControl" destination="Cgz-43-Hta" id="7xU-7J-OQb"/>
+                        <outlet property="titleTextField" destination="Ugn-7e-aYE" id="dUC-gl-61v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AST-wn-tgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1350" y="-630"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
