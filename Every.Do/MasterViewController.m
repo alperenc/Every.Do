@@ -28,9 +28,11 @@
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     self.todos = [@[[[Todo alloc]initWithTitle:@"Every.Do"
-                                       details:@"Make a todo app for Lighthosue Labs W3D2."],
+                                       details:@"Make a todo app for Lighthouse Labs W3D2."
+                                      prioroty:Critical],
                     [[Todo alloc]initWithTitle:@"W3D1: Readings"
-                                       details:@"Do the readings for W3D1 and answer questions."],
+                                       details:@"Do the readings for W3D1 and answer questions."
+                                      prioroty:High],
                     [[Todo alloc]initWithTitle:@"W3D1: Image Galleries"
                                        details:@"Implement stretch goals 3 & 4."],
                     [[Todo alloc]initWithTitle:@"W2E: Q2"
@@ -63,9 +65,9 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.todos[indexPath.row];
+        Todo *todo = self.todos[indexPath.row];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        [controller setDetailItem:object];
+        [controller setDetailItem:todo];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
     }
