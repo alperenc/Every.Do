@@ -29,16 +29,19 @@
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
-    self.todos = [@[[[Todo alloc]initWithTitle:@"Every.Do"
-                                       details:@"Make a todo app for Lighthouse Labs W3D2."
-                                      priority:Critical],
-                    [[Todo alloc]initWithTitle:@"W3D1: Readings"
-                                       details:@"Do the readings for W3D1 and answer questions."
-                                      priority:High],
-                    [[Todo alloc]initWithTitle:@"W3D1: Image Galleries"
-                                       details:@"Implement stretch goals 3 & 4."],
-                    [[Todo alloc]initWithTitle:@"W2E: Q2"
-                                       details:@"Do the exercise in second weekend's questions."]] mutableCopy];
+    NSArray *incomplete = @[
+                            [[Todo alloc]initWithTitle:@"Every.Do"
+                                               details:@"Make a todo app for Lighthouse Labs W3D2."
+                                              priority:Critical],
+                            [[Todo alloc]initWithTitle:@"W3D1: Readings"
+                                               details:@"Do the readings for W3D1 and answer questions."
+                                              priority:High],
+                            [[Todo alloc]initWithTitle:@"W3D1: Image Galleries"
+                                               details:@"Implement stretch goals 3 & 4."],
+                            [[Todo alloc]initWithTitle:@"W2E: Q2"
+                                               details:@"Do the exercise in second weekend's questions."]];
+    
+    self.todos = [@[[incomplete mutableCopy],[NSMutableArray array]] mutableCopy];
     
 }
 
@@ -66,7 +69,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Todo *todo = self.todos[indexPath.row];
+        Todo *todo = self.todos[indexPath.section][indexPath.row];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
         [controller setDetailItem:todo];
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
@@ -77,18 +80,18 @@
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.todos.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.todos.count;
+    return [self.todos[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TodoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
     [cell addGestureRecognizer:[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToComplete:)]];
     
-    Todo *todo = self.todos[indexPath.row];
+    Todo *todo = self.todos[indexPath.section][indexPath.row];
     
     if ([todo isCompleted]) {
         
@@ -122,7 +125,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.todos removeObjectAtIndex:indexPath.row];
+        [self.todos[indexPath.section] removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -135,10 +138,24 @@
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    Todo *todo = [self.todos objectAtIndex:sourceIndexPath.row];
-    [self.todos removeObjectAtIndex:sourceIndexPath.row];
-    [self.todos insertObject:todo atIndex:destinationIndexPath.row];
+    Todo *todo = self.todos[sourceIndexPath.section][sourceIndexPath.row];
+    [self.todos[sourceIndexPath.section] removeObjectAtIndex:sourceIndexPath.row];
+    [self.todos[destinationIndexPath.section] insertObject:todo atIndex:destinationIndexPath.row];
     
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    if (section == 1) {
+        return @"Completed";
+    } else {
+        return @"Incomplete";
+    }
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80.0;
 }
 
 #pragma mark - Add Todo
@@ -146,10 +163,10 @@
 -(void)addTodo:(Todo *)todo {
     
     if (!self.todos) {
-        self.todos = [[NSMutableArray alloc] init];
+        self.todos = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], nil];
     }
     
-    [self.todos insertObject:todo atIndex:0];
+    [self.todos[0] insertObject:todo atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
@@ -161,15 +178,15 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
     
-    Todo *todo = self.todos[indexPath.row];
+    Todo *todo = self.todos[indexPath.section][indexPath.row];
     
     if (!todo.completed) {
         todo.completed = YES;
         
-        [self.todos removeObjectAtIndex:indexPath.row];
+        [self.todos[indexPath.section] removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
-        [self.todos addObject:todo];
+        [self.todos[1] addObject:todo];
         
         [self.tableView reloadData];
     }
