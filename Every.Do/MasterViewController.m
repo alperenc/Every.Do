@@ -15,6 +15,7 @@
 @interface MasterViewController () <AddTodoDelegate>
 
 @property NSMutableArray *todos;
+
 @end
 
 @implementation MasterViewController
@@ -22,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
@@ -38,7 +39,6 @@
                                        details:@"Implement stretch goals 3 & 4."],
                     [[Todo alloc]initWithTitle:@"W2E: Q2"
                                        details:@"Do the exercise in second weekend's questions."]] mutableCopy];
-    
     
 }
 
@@ -86,12 +86,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TodoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell" forIndexPath:indexPath];
+    [cell addGestureRecognizer:[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToComplete:)]];
     
     Todo *todo = self.todos[indexPath.row];
     
-    cell.todoTitleLabel.text = [NSString stringWithFormat:@"%@", todo.title];
-    cell.todoDetailsLabel.text = [NSString stringWithFormat:@"%@", todo.details];
-    cell.todoPriorityLabel.text = [NSString stringWithFormat:@"%@", [todo priorityToString:todo.priorityNumber]];
+    if ([todo isCompleted]) {
+        
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:todo.title
+                                                                              attributes:@{NSStrikethroughStyleAttributeName: @1}];
+        cell.todoTitleLabel.attributedText = attributedTitle;
+        
+        NSAttributedString *attributedDetails = [[NSAttributedString alloc] initWithString:todo.details
+                                                                                attributes:@{NSStrikethroughStyleAttributeName: @1}];
+        cell.todoDetailsLabel.attributedText = attributedDetails;
+        
+        NSAttributedString *attributedPriority = [[NSAttributedString alloc] initWithString:[todo priorityToString:todo.priorityNumber]
+                                                                                 attributes:@{NSStrikethroughStyleAttributeName: @1}];
+        cell.todoPriorityLabel.attributedText = attributedPriority;
+        
+    } else {
+    
+        cell.todoTitleLabel.text = [NSString stringWithFormat:@"%@", todo.title];
+        cell.todoDetailsLabel.text = [NSString stringWithFormat:@"%@", todo.details];
+        cell.todoPriorityLabel.text = [NSString stringWithFormat:@"%@", [todo priorityToString:todo.priorityNumber]];
+    }
+    
     
     return cell;
 }
@@ -122,6 +141,26 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
+    [self.tableView reloadData];
+    
+}
+
+- (void)swipeToComplete:(UISwipeGestureRecognizer *)sender {
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[sender locationInView:self.tableView]];
+    
+    Todo *todo = self.todos[indexPath.row];
+    
+    if (!todo.completed) {
+        todo.completed = YES;
+        
+        [self.todos removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self.todos addObject:todo];
+        
+        [self.tableView reloadData];
+    }
 }
 
 @end
