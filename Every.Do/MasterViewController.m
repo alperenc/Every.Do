@@ -129,6 +129,18 @@
     }
 }
 
+-(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    Todo *todo = [self.todos objectAtIndex:sourceIndexPath.row];
+    [self.todos removeObjectAtIndex:sourceIndexPath.row];
+    [self.todos insertObject:todo atIndex:destinationIndexPath.row];
+    
+}
+
 #pragma mark - Add Todo
 
 -(void)addTodo:(Todo *)todo {
